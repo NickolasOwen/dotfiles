@@ -52,7 +52,7 @@ require("lazy").setup(plugins, opts)
 require("catppuccin").setup()
 require("mason").setup()
 require("mason-lspconfig").setup{
-  ensure_installed = { "lua_ls", "powershell_es", "yamlls" }
+  ensure_installed = { "lua_ls", "powershell_es", "yamlls", "marksman" }
 }
 require("fidget").setup()
 
@@ -77,7 +77,7 @@ vim.cmd.colorscheme "catppuccin"
 -- Treesitter
 local configs = require("nvim-treesitter.configs")
 configs.setup({
-  ensure_installed = { "lua", "vim", "vimdoc", "javascript", "html", "css", "yaml" },
+  ensure_installed = { "lua", "vim", "vimdoc", "javascript", "html", "css", "yaml", "markdown" },
   sync_install = false,
   highlight = { enable = true },
   indent = { enable = true },
