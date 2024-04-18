@@ -1,0 +1,3 @@
+all:
+  hosts:
+    {{_file_name_}}:

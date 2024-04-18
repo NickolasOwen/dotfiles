@@ -93,3 +93,8 @@ vim.keymap.set( 't', '<leader>fb', builtin.buffers, {noremap = true} )
 -- Terminal Keybinds
 vim.keymap.set( 't', '<leader><ESC>', '<C-\\><C-n>', {noremap = true} )
 vim.keymap.set( 'n', '<leader>fb', builtin.buffers, {} )
+
+-- Template Keybinds
+vim.keymap.set('n', '<Leader>t', function()
+    vim.fn.feedkeys(':Template ')
+end, { remap = true})
