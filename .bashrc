@@ -15,6 +15,7 @@ alias gpd='git push -u origin dev'
 alias gpm='git push -u origin main'
 alias edit='nvim'
 alias sedit='sudo /home/nowen/.local/bin/nvim'
+alias batt='upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep percentage: | awk "{ print \$2 }"'
 
 alias xquery='sudo xbps-query -Rs'
 alias xinstall='sudo xbps-install -Su'

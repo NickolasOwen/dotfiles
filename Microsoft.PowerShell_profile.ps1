@@ -24,8 +24,6 @@ function touch() {
   out-file $path
 }
 
-
-
 function gs() {
   git status
 }
