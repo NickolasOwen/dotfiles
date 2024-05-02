@@ -67,36 +67,28 @@ function gd() {
 }
 
 function pcs() {
-  docker compose ps
+  podman compose ps
 }
 
 function pcb() {
-  docker compose build
+  podman compose build
 }
 
-## Build and (re)launch docker containers
+## Build and (re)launch podman containers
 function pcbr() {
-  if ($(docker compose ps)) {
-    docker compose down
+  if ($(podman compose ps)) {
+    podman compose down
   }
-  docker compose build
-  docker compose up -d
+  podman compose build
+  podman compose up -d
 }
 
 function pcu() {
-  docker compose up -d
+  podman compose up -d
 }
 
 function pcd() {
-  docker compose down
-}
-
-function pclf() {
-  docker logs narwhal-frontend-1
-}
-
-function pcls() {
-  docker logs narwhal-surrealdb-1
+  podman compose down
 }
 
 function ll() {

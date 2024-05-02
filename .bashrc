@@ -3,6 +3,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+alias sways="sway -c ~/.config/sway/config"
 alias ls='ls --color=auto'
 alias ll='ls -ltra'
 alias gs='git status'
@@ -51,3 +52,14 @@ eval "$(starship init bash)"
 
 # Source directory movement script
 . "$HOME/.config/z.sh"
+
+# Set Vi Mode
+set -o vi
+
+# Setup fzf (Fuzzy finding)
+eval "$(fzf --bash)"
+
+# Create sway directory if it doesn't exist
+if [ ! -d /tmp/swaytmp ]; then
+  mkdir /tmp/swaytmp
+fi

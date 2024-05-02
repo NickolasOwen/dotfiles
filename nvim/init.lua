@@ -44,17 +44,18 @@ local plugins = {
       })
     end
   },
+  { "terrortylor/nvim-comment" },
 }
 local opts = {}
-
 -- Initialize plugins
 require("lazy").setup(plugins, opts)
 require("catppuccin").setup()
 require("mason").setup()
 require("mason-lspconfig").setup{
-  ensure_installed = { "lua_ls", "powershell_es", "yamlls", "marksman" }
+  ensure_installed = { "lua_ls", "powershell_es", "yamlls", "marksman", "volar", "tsserver"}
 }
 require("fidget").setup()
+require('nvim_comment').setup()
 
 -- LSP
 local lspconfig = require('lspconfig')
@@ -70,6 +71,9 @@ lspconfig.lua_ls.setup {
 }
 lspconfig.powershell_es.setup {}
 lspconfig.yamlls.setup {}
+lspconfig.marksman.setup {}
+lspconfig.volar.setup {}
+lspconfig.tsserver.setup {}
 
 -- Set colorscheme
 vim.cmd.colorscheme "catppuccin"
@@ -98,3 +102,7 @@ vim.keymap.set( 'n', '<leader>fb', builtin.buffers, {} )
 vim.keymap.set('n', '<Leader>t', function()
     vim.fn.feedkeys(':Template ')
 end, { remap = true})
+
+-- LSP Keybinds
+vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
