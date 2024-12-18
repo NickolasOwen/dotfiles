@@ -5,7 +5,11 @@
 
 alias sways="sway -c ~/.config/sway/config"
 alias ls='ls --color=auto'
-alias ll='ls -ltra'
+if command -v exa &> /dev/null; then
+  alias ll='exa -la'
+else
+  alias ll='ls -ltra'
+fi
 alias gs='git status'
 alias gd='git diff'
 alias ga='git add -A'
@@ -15,7 +19,7 @@ alias gpu='git push'
 alias gpd='git push -u origin dev'
 alias gpm='git push -u origin main'
 alias edit='nvim'
-alias sedit='sudo /home/nowen/.local/bin/nvim'
+alias sedit='sudo /usr/bin/nvim'
 alias batt='upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep percentage: | awk "{ print \$2 }"'
 
 alias xquery='sudo xbps-query -Rs'
@@ -62,4 +66,13 @@ eval "$(fzf --bash)"
 # Create sway directory if it doesn't exist
 if [ ! -d /tmp/swaytmp ]; then
   mkdir /tmp/swaytmp
+fi
+
+# case $SH_CONNECTION in
+#   '')
+#     sways ;;
+# esac
+
+if ! pgrep -x "sway" > /dev/null && ! -z "$SSH_CONNECTION"; then
+  sways
 fi
