@@ -12,8 +12,10 @@ config.color_scheme = 'Dracula'
 config.font = wezterm.font 'Anonymice Nerd Font Mono'
 config.font_size = 12.0
 
--- Spawn a fish shell in login mode
+-- Spawn a PowerShell in login mode
 config.default_prog = { 'pwsh' }
+-- config.default_prog = { 'bash' }
+-- config.enable_wayland = false
 
 -- and finally, return the configuration to wezterm
 return config
