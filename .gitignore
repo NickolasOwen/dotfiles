@@ -19,6 +19,9 @@ dist/
 # Package files
 *.jar
 
+# Wallpapers
+.wallpapers/*
+
 # Maven
 target/
 dist/
