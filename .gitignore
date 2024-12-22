@@ -20,7 +20,7 @@ dist/
 *.jar
 
 # Wallpapers
-.wallpapers/*
+.wallpapers/
 
 # Maven
 target/
