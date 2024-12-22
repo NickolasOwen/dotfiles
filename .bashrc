@@ -8,7 +8,7 @@ alias ls='ls --color=auto'
 if command -v exa &> /dev/null; then
   alias ll='exa -la'
 else
-  alias ll='ls -ltra'
+  alias ll='ls -ltrA'
 fi
 alias gs='git status'
 alias gd='git diff'
