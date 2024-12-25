@@ -23,26 +23,48 @@ alias sedit='doas /usr/bin/nvim'
 alias batt='upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep percentage: | awk "{ print \$2 }"'
 alias xquery='doas xbps-query -Rs'
 alias xinstall='doas xbps-install -Su'
-alias emerge='doas emerge'
+alias em='doas emerge --ask'
+alias emerge='doas emerge --ask'
 alias emu='doas emerge --ask --changed-use --deep @world'
 alias emd='doas emerge --ask --depclean'
 alias emr='doas emerge --ask --deselect'
+alias ems='doas emerge --search'
+alias obsidian='obsidian --no-sandbox --ozone-platform=wayland --ozone-platform-hint=auto --enable-features=UseOzonePlatform,WaylandWindowDecorations %U'
+
+alias pcs="podman compose ps"
+alias pcb="podman compose build"
+alias pcu="podman compose up -d"
+alias pcd="podman compose down"
+function pcbr {
+  PCS=$(podman compose ps)
+  if [ $PCS ]; then
+    podman compose down
+  fi
+  podman compose build
+  podman compose up -d
+}
+export -f pcbr
 
 # pandoc projects/bitbucket.org/tti/howto/Monitoring/docs/ilmt.md | lynx --stdin
 function mdlynx { pandoc $1 | lynx --stdin; }
 export -f mdlynx
 
-export PATH=$PATH:~/.local/bin:/home/linuxbrew/.linuxbrew/bin
+# export PATH=$PATH:~/.local/bin:/home/linuxbrew/.linuxbrew/bin
 
 # export XKB_DEFAULT_LAYOUT=us
 # export XKB_DEFAULT_VARIANT=dvorak
 # export XDG_RUNTIME_DIR=/tmp/swaytmp
+
+export NPM_CONFIG_PREFIX=$HOME/.local/
+export PATH="/home/$USER/go/bin:/home/$USER/.local/bin:$NPM_CONFIG_PREFIX/bin:~/.local/bin:/home/linuxbrew/.linuxbrew/bin:$PATH"
 
 export XDG_BACKEND=wayland
 export XDG_SESSION_TYPE=wayland
 export XDG_CURRENT_DESKTOP=Hyprland
 export XDG_CACHE_HOME=/home/bear/.cache
 export XDG_RUNTIME_DIR=/home/bear/.run/1000
+
+export PODMAN_COMPOSE_WARNING_LOGS=false
 
 export GTK_THEME=Adwaita:dark
 
@@ -85,3 +107,4 @@ set -o vi
 # if ! pgrep -x "sway" > /dev/null && ! -z "$SSH_CONNECTION"; then
 #   sways
 # fi
+cd ~/

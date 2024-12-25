@@ -1,7 +1,7 @@
 ## Remove alias for ls if it exists
 $ls_alias = get-alias ls -ErrorAction SilentlyContinue
-$ALACRITTY = "C:\Users\a_nowen1\AppData\Roaming\Alacritty\alacritty.toml"
-$WEZTERM = "C:\Users\a_nowen1\.wezterm.lua"
+# $ALACRITTY = "C:\Users\a_nowen1\AppData\Roaming\Alacritty\alacritty.toml"
+# $WEZTERM = "C:\Users\a_nowen1\.wezterm.lua"
 if ($ls_alias){
   remove-item alias:ls
 }
@@ -105,14 +105,22 @@ $PSStyle.FileInfo.Directory = "`e[35;1m"
 
 Set-Alias -Name edit -Value nvim
 
-Invoke-Expression (&starship init powershell)
+# Invoke-Expression (&starship init powershell)
 
-$Env:PATH += ";C:\flutter\bin;C:\users\thema\.bin"
-$Env:HXPROFILE = "C:\Users\thema\AppData\Roaming\helix\config.toml"
+# $Env:PATH += ";C:\flutter\bin;C:\users\thema\.bin"
+# $Env:HXPROFILE = "C:\Users\thema\AppData\Roaming\helix\config.toml"
 
 # Import Chocolatey Profile
-$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) {
-  Import-Module "$ChocolateyProfile"
-}
+# $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+# if (Test-Path($ChocolateyProfile)) {
+#   Import-Module "$ChocolateyProfile"
+# }
 
+$modules = Get-ChildItem -Recurse -File -Filter "*.psm1" -Path "~/"
+foreach ($module in $modules) {
+  try {
+    Import-Module $module.FullName
+    Write-Host "Imported" $module.FullName
+  }
+  catch {Write-Host "Unable to import" $module.FullName}
+}
