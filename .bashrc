@@ -57,6 +57,7 @@ export -f mdlynx
 
 export NPM_CONFIG_PREFIX=$HOME/.local/
 export PATH="/home/$USER/go/bin:/home/$USER/.local/bin:$NPM_CONFIG_PREFIX/bin:~/.local/bin:/home/linuxbrew/.linuxbrew/bin:$PATH"
+export PATH="~/.local/flutter/bin:$PATH"
 
 export XDG_BACKEND=wayland
 export XDG_SESSION_TYPE=wayland
@@ -67,6 +68,8 @@ export XDG_RUNTIME_DIR=/home/bear/.run/1000
 export PODMAN_COMPOSE_WARNING_LOGS=false
 
 export GTK_THEME=Adwaita:dark
+# export CHROME_EXECUTABLE="google-chrome-stable --enable-features=VaapiVideoDecodeLinuxGL --use-gl=angle --use-angle=gl --ozone-platform=wayland"
+export CHROME_EXECUTABLE="google-chrome-stable"
 
 # Makes manpages prettier
 export PAGER="less"

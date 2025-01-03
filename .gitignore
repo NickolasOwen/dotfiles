@@ -59,8 +59,9 @@ Code/
 dconf/
 glow/
 gtk-3.0/
-# hypr
-# kitty
-# nvim
 obsidian/
-# powershell
+Google/
+flutter/
+google-chrome/
+.config/helix/runtime/
+

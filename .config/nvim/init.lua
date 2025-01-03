@@ -1,13 +1,42 @@
 -- Basic Vim Settings
-vim.cmd("set expandtab")
-vim.cmd("set tabstop=2")
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
-vim.cmd("set relativenumber")
-vim.cmd("set linebreak")
-vim.cmd("set colorcolumn=80,120")
-vim.cmd("set textwidth=120")
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.relativenumber = true
+vim.opt.linebreak = true
+vim.opt.colorcolumn = "80,120"
+vim.opt.textwidth=120
+vim.opt.scrolloff = 10
+vim.opt.undofile = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.signcolumn = "number"
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
+vim.g.have_nerd_font = true
+
+-- Keymaps
 vim.g.mapleader = " "
+vim.g.maplocalleader = ' '
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("i", "jj", "<Esc>")
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- Highlight Yanks
+vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Highlight when yanking (copying) text",
+  group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
+-- Custom Run
+vim.keymap.set("n", "<F5>", function()
+  os.execute('pwsh /home/bear/projects/github.com/NickolasOwen/nebulous/scripts/rebuild.ps1')
+end)
 
 -- Download/Install Lazy Plugin Manager Automatically
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -32,9 +61,24 @@ local plugins = {
     "neovim/nvim-lspconfig"
   },
   { 'nvim-telescope/telescope.nvim', tag = '0.1.6',
-    dependencies = { 'nvim-lua/plenary.nvim' }
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      -- See `:help telescope.builtin`
+      local builtin = require 'telescope.builtin'
+      vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+      vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+      vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+      vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+    end,
   },
   { "j-hui/fidget.nvim" },
+  { "tpope/vim-sleuth" },
   {'glepnir/template.nvim', cmd = {'Template','TemProject'}, config = function()
       require('template').setup({
           -- config in there
@@ -45,6 +89,121 @@ local plugins = {
     end
   },
   { "terrortylor/nvim-comment" },
+  { -- Autocompletion
+    'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
+    dependencies = {
+      -- Snippet Engine & its associated nvim-cmp source
+      {
+        'L3MON4D3/LuaSnip',
+        build = (function()
+          -- Build Step is needed for regex support in snippets.
+          -- This step is not supported in many windows environments.
+          -- Remove the below condition to re-enable on windows.
+          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+            return
+          end
+          return 'make install_jsregexp'
+        end)(),
+        dependencies = {
+          -- `friendly-snippets` contains a variety of premade snippets.
+          --    See the README about individual language/framework/plugin snippets:
+          --    https://github.com/rafamadriz/friendly-snippets
+          -- {
+          --   'rafamadriz/friendly-snippets',
+          --   config = function()
+          --     require('luasnip.loaders.from_vscode').lazy_load()
+          --   end,
+          -- },
+        },
+      },
+      'saadparwaiz1/cmp_luasnip',
+
+      -- Adds other completion capabilities.
+      --  nvim-cmp does not ship with all sources by default. They are split
+      --  into multiple repos for maintenance purposes.
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-path',
+    },
+    config = function()
+      -- See `:help cmp`
+      local cmp = require 'cmp'
+      local luasnip = require 'luasnip'
+      luasnip.config.setup {}
+
+      cmp.setup {
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+        completion = { completeopt = 'menu,menuone,noinsert' },
+
+        -- For an understanding of why these mappings were
+        -- chosen, you will need to read `:help ins-completion`
+        --
+        -- No, but seriously. Please read `:help ins-completion`, it is really good!
+        mapping = cmp.mapping.preset.insert {
+          -- Select the [n]ext item
+          ['<C-n>'] = cmp.mapping.select_next_item(),
+          -- Select the [p]revious item
+          ['<C-p>'] = cmp.mapping.select_prev_item(),
+
+          -- Scroll the documentation window [b]ack / [f]orward
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+
+          -- Accept ([y]es) the completion.
+          --  This will auto-import if your LSP supports it.
+          --  This will expand snippets if the LSP sent a snippet.
+          ['<C-y>'] = cmp.mapping.confirm { select = true },
+
+          -- If you prefer more traditional completion keymaps,
+          -- you can uncomment the following lines
+          --['<CR>'] = cmp.mapping.confirm { select = true },
+          --['<Tab>'] = cmp.mapping.select_next_item(),
+          --['<S-Tab>'] = cmp.mapping.select_prev_item(),
+
+          -- Manually trigger a completion from nvim-cmp.
+          --  Generally you don't need this, because nvim-cmp will display
+          --  completions whenever it has completion options available.
+          ['<C-Space>'] = cmp.mapping.complete {},
+
+          -- Think of <c-l> as moving to the right of your snippet expansion.
+          --  So if you have a snippet that's like:
+          --  function $name($args)
+          --    $body
+          --  end
+          --
+          -- <c-l> will move you to the right of each of the expansion locations.
+          -- <c-h> is similar, except moving you backwards.
+          ['<C-l>'] = cmp.mapping(function()
+            if luasnip.expand_or_locally_jumpable() then
+              luasnip.expand_or_jump()
+            end
+          end, { 'i', 's' }),
+          ['<C-h>'] = cmp.mapping(function()
+            if luasnip.locally_jumpable(-1) then
+              luasnip.jump(-1)
+            end
+          end, { 'i', 's' }),
+
+          -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
+          --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
+        },
+        sources = {
+          {
+            name = 'lazydev',
+            -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
+            group_index = 0,
+          },
+          { name = 'nvim_lsp' },
+          { name = 'luasnip' },
+          { name = 'path' },
+        },
+      }
+    end,
+  },
 }
 local opts = {}
 -- Initialize plugins
@@ -52,7 +211,7 @@ require("lazy").setup(plugins, opts)
 require("catppuccin").setup()
 require("mason").setup()
 require("mason-lspconfig").setup{
-  ensure_installed = { "lua_ls", "powershell_es", "yamlls", "marksman", "volar", "tsserver"}
+  ensure_installed = { "lua_ls", "powershell_es", "yamlls", "marksman", "ts_ls", "volar"}
 }
 require("fidget").setup()
 require('nvim_comment').setup()
@@ -72,8 +231,23 @@ lspconfig.lua_ls.setup {
 lspconfig.powershell_es.setup {}
 lspconfig.yamlls.setup {}
 lspconfig.marksman.setup {}
-lspconfig.volar.setup {}
-lspconfig.tsserver.setup {}
+-- lspconfig.volar.setup {}
+-- lspconfig.ts_ls.setup {}
+
+-- local lspconfig = require('lspconfig')
+
+lspconfig.volar.setup {
+  -- add filetypes for typescript, javascript and vue
+  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+  init_options = {
+    vue = {
+      -- disable hybrid mode
+      hybridMode = false,
+    },
+  },
+}
+-- you must remove ts_ls setup
+-- lspconfig.ts_ls.setup {}
 
 -- Set colorscheme
 vim.cmd.colorscheme "catppuccin"
@@ -95,14 +269,20 @@ vim.keymap.set( 'n', '<leader>fb', builtin.buffers, {} )
 vim.keymap.set( 't', '<leader>fb', builtin.buffers, {noremap = true} )
 
 -- Terminal Keybinds
-vim.keymap.set( 't', '<leader><ESC>', '<C-\\><C-n>', {noremap = true} )
+vim.keymap.set( 't', '<leader><Esc>', '<C-\\><C-n>', {noremap = true} )
+vim.keymap.set( 't', '<Esc><Esc>', '<C-\\><C-n>', {noremap = true} )
 vim.keymap.set( 'n', '<leader>fb', builtin.buffers, {} )
 
 -- Template Keybinds
-vim.keymap.set('n', '<Leader>t', function()
+vim.keymap.set('n', '<Leader>tpl', function()
     vim.fn.feedkeys(':Template ')
 end, { remap = true})
 
 -- LSP Keybinds
-vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "gI", "<cmd>lua vim.lsp.buf.implementations()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
+
