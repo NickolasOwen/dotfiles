@@ -66,4 +66,5 @@ google-chrome/
 .config/helix/runtime/
 .config/chromium/
 .config/pulse/
+.ssh/known_hosts
 
