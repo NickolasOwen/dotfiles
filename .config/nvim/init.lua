@@ -1,8 +1,8 @@
 -- Basic Vim Settings
 vim.opt.expandtab = true
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 vim.opt.relativenumber = true
 vim.opt.linebreak = true
 vim.opt.colorcolumn = "80,120"
@@ -54,12 +54,18 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Declare plugins for automatic install
 local plugins = {
+  -- Color Themes
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
+  --
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
   { "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig"
   },
+  -- Window Manager Config
+  {"baskerville/vim-sxhkdrc"},
+  --
   { 'nvim-telescope/telescope.nvim', tag = '0.1.6',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
@@ -97,31 +103,21 @@ local plugins = {
       {
         'L3MON4D3/LuaSnip',
         build = (function()
-          -- Build Step is needed for regex support in snippets.
-          -- This step is not supported in many windows environments.
-          -- Remove the below condition to re-enable on windows.
           if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
             return
           end
           return 'make install_jsregexp'
         end)(),
         dependencies = {
-          -- `friendly-snippets` contains a variety of premade snippets.
-          --    See the README about individual language/framework/plugin snippets:
-          --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
       },
       'saadparwaiz1/cmp_luasnip',
-
-      -- Adds other completion capabilities.
-      --  nvim-cmp does not ship with all sources by default. They are split
-      --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
     },
@@ -160,9 +156,9 @@ local plugins = {
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
-          --['<CR>'] = cmp.mapping.confirm { select = true },
-          --['<Tab>'] = cmp.mapping.select_next_item(),
-          --['<S-Tab>'] = cmp.mapping.select_prev_item(),
+          ['<CR>'] = cmp.mapping.confirm { select = true },
+          ['<Tab>'] = cmp.mapping.select_next_item(),
+          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
@@ -208,10 +204,11 @@ local plugins = {
 local opts = {}
 -- Initialize plugins
 require("lazy").setup(plugins, opts)
-require("catppuccin").setup()
+-- require("catppuccin").setup()
 require("mason").setup()
 require("mason-lspconfig").setup{
-  ensure_installed = { "lua_ls", "powershell_es", "yamlls", "marksman", "ts_ls", "volar"}
+  -- ensure_installed = { "lua_ls", "powershell_es", "yamlls", "marksman", "ts_ls", "volar"}
+  ensure_installed = { "lua_ls", "rust_analyzer", "bashls", "yamlls", "marksman", "powershell_es"}
 }
 require("fidget").setup()
 require('nvim_comment').setup()
@@ -228,6 +225,22 @@ lspconfig.lua_ls.setup {
     },
   },
 }
+-- local on_attach = require("plugins.configs.lspconfig").on_attach
+-- local capabilities = require("plugins.configs.lspconfig").capabilities
+-- local lspconfig = require("lspconfig")
+local util = require "lspconfig/util"
+
+lspconfig.rust_analyzer.setup({
+  filetypes = {"rust"},
+  root_dir = util.root_pattern("Cargo.toml"),
+  settings = {
+    ['rust_analyzer'] = {
+      cargo = {
+        allFeatures = true,
+      },
+    },
+  },
+})
 lspconfig.powershell_es.setup {}
 lspconfig.yamlls.setup {}
 lspconfig.marksman.setup {}
@@ -236,21 +249,20 @@ lspconfig.marksman.setup {}
 
 -- local lspconfig = require('lspconfig')
 
-lspconfig.volar.setup {
-  -- add filetypes for typescript, javascript and vue
-  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-  init_options = {
-    vue = {
-      -- disable hybrid mode
-      hybridMode = false,
-    },
-  },
-}
--- you must remove ts_ls setup
--- lspconfig.ts_ls.setup {}
+-- lspconfig.volar.setup {
+--   -- add filetypes for typescript, javascript and vue
+--   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+--   init_options = {
+--     vue = {
+--       -- disable hybrid mode
+--       hybridMode = false,
+--     },
+--   },
+-- }
 
 -- Set colorscheme
-vim.cmd.colorscheme "catppuccin"
+-- vim.cmd.colorscheme "catppuccin"
+vim.cmd.colorscheme "moonfly"
 
 -- Treesitter
 local configs = require("nvim-treesitter.configs")
