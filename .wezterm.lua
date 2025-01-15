@@ -6,16 +6,81 @@ local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
 
--- For example, changing the color scheme:
--- config.color_scheme = 'Batman'
-config.color_scheme = 'Dracula'
-config.font = wezterm.font 'Anonymice Nerd Font Mono'
-config.font_size = 12.0
+-- config.color_scheme = 'Astrodark (Gogh)'
+config.color_scheme = 'Ayu'
+config.disable_default_key_bindings = true
 
--- Spawn a PowerShell in login mode
-config.default_prog = { 'pwsh' }
--- config.default_prog = { 'bash' }
--- config.enable_wayland = false
+-- config.leader = { key = 'VoidSymbol', mods = '', timeout_milliseconds = math.maxinteger }
+-- config.leader = { key = 'a', mods = 'ALT', timeout_milliseconds = math.maxinteger }
+config.keys = {
+  {
+    key = '\\',
+    mods = 'ALT',
+    action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+  },
+  {
+    key = '-',
+    mods = 'ALT',
+    action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
+  },
+  {
+    key = 'h',
+    mods = 'ALT',
+    action = wezterm.action.AdjustPaneSize { 'Left', 5 },
+  },
+  {
+    key = 'j',
+    mods = 'ALT',
+    action = wezterm.action.AdjustPaneSize { 'Down', 5 },
+  },
+  { key = 'k',
+    mods = 'ALT',
+    action = wezterm.action.AdjustPaneSize { 'Up', 5 } },
+  {
+    key = 'l',
+    mods = 'ALT',
+    action = wezterm.action.AdjustPaneSize { 'Right', 5 },
+  },
+  {
+    key = 't',
+    mods = 'ALT',
+    action = wezterm.action.SpawnTab 'CurrentPaneDomain',
+  },
+  {
+    key = 'w',
+    mods = 'CTRL',
+    action = wezterm.action.CloseCurrentTab { confirm = true },
+  },
+}
+
+-- Create keybinds to move to tabs using ALT + 1-9
+for i = 1, 8 do
+  table.insert(config.keys, {
+    key = tostring(i),
+    mods = 'ALT',
+    action = wezterm.action.ActivateTab(i - 1),
+  })
+end
+
+-- Set Shell based on "\" or "/" file path separator
+if package.config:sub(1,1) == '\\' then
+    config.default_prog = { 'pwsh' }
+    config.font = wezterm.font 'Anonymice Nerd Font Mono'
+else
+    config.default_prog = { 'fish' }
+    config.font = wezterm.font 'AnonymicePro Nerd Font Mono'
+end
+
+config.font_size = 11.0
+
+config.enable_tab_bar = false
+
+config.window_padding = {
+    left = 0,
+    right = 0,
+    bottom = 0,
+    top = 0,
+}
 
 -- and finally, return the configuration to wezterm
 return config

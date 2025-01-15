@@ -7,11 +7,11 @@ super + b
 
 # terminal emulator
 super + Return
-	urxvt
+	wezterm
 
 # program launcher
-super + @space
-	dmenu_run
+super + @space 
+	rlaunch
 
 # make sxhkd reload its configuration files:
 super + Escape

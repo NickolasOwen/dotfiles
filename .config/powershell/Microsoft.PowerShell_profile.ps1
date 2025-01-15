@@ -1,7 +1,7 @@
 ## Remove alias for ls if it exists
 $ls_alias = get-alias ls -ErrorAction SilentlyContinue
 # $ALACRITTY = "C:\Users\a_nowen1\AppData\Roaming\Alacritty\alacritty.toml"
-# $WEZTERM = "C:\Users\a_nowen1\.wezterm.lua"
+$WEZTERM = "C:\Users\a_nowen1\.wezterm.lua"
 if ($ls_alias){
   remove-item alias:ls
 }

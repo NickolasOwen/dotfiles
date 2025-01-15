@@ -10,3 +10,5 @@ stow .
 
 > [!IMPORTANT]
 > GNU Stow must be installed locally.
+
+
