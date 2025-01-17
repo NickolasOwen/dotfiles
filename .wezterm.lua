@@ -6,8 +6,9 @@ local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
 
--- config.color_scheme = 'Astrodark (Gogh)'
-config.color_scheme = 'Ayu'
+config.color_scheme = 'Astrodark (Gogh)'
+-- config.color_scheme = 'Belge (terminal.sexy)'
+-- config.color_scheme = 'Bitmute (terminal.sexy)'
 config.disable_default_key_bindings = true
 
 -- config.leader = { key = 'VoidSymbol', mods = '', timeout_milliseconds = math.maxinteger }
@@ -25,20 +26,20 @@ config.keys = {
   },
   {
     key = 'h',
-    mods = 'ALT',
+    mods = 'CTRL|ALT',
     action = wezterm.action.AdjustPaneSize { 'Left', 5 },
   },
   {
     key = 'j',
-    mods = 'ALT',
+    mods = 'CTRL|ALT',
     action = wezterm.action.AdjustPaneSize { 'Down', 5 },
   },
   { key = 'k',
-    mods = 'ALT',
+    mods = 'CTRL|ALT',
     action = wezterm.action.AdjustPaneSize { 'Up', 5 } },
   {
     key = 'l',
-    mods = 'ALT',
+    mods = 'CTRL|ALT',
     action = wezterm.action.AdjustPaneSize { 'Right', 5 },
   },
   {
@@ -47,9 +48,46 @@ config.keys = {
     action = wezterm.action.SpawnTab 'CurrentPaneDomain',
   },
   {
+    key = 'p',
+    mods = 'ALT',
+    action = wezterm.action.PaneSelect {
+      alphabet = '1234567890',
+    },
+  },
+  {
+    key = 'h',
+    mods = 'ALT',
+    action = wezterm.action.ActivatePaneDirection 'Left',
+  },
+  {
+    key = 'j',
+    mods = 'ALT',
+    action = wezterm.action.ActivatePaneDirection 'Down',
+  },
+  {
+    key = 'k',
+    mods = 'ALT',
+    action = wezterm.action.ActivatePaneDirection 'Up',
+  },
+  {
+    key = 'l',
+    mods = 'ALT',
+    action = wezterm.action.ActivatePaneDirection 'Right',
+  },
+  {
     key = 'w',
     mods = 'CTRL',
     action = wezterm.action.CloseCurrentTab { confirm = true },
+  },
+  {
+    key = 'c',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.CopyTo 'ClipboardAndPrimarySelection',
+  },
+  {
+    key = 'v',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.PasteFrom 'Clipboard',
   },
 }
 
