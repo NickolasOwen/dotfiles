@@ -92,6 +92,9 @@ function pcu() {
 function pcd() {
   podman compose down
 }
+function pcb() {
+  podman compose pull
+}
 
 function ll() {
   param(
@@ -116,8 +119,9 @@ Set-Alias -Name edit -Value nvim
 #   Import-Module "$ChocolateyProfile"
 # }
 
-$modules = Get-ChildItem -Recurse -File -Filter "*.psm1" -Path "~/"
+$modules = Get-ChildItem -Recurse -File -Filter "*.psm1" -Path "~/projects"
 foreach ($module in $modules) {
+  if ($module.FullName -like "*vscode*" -or $module.FullName -like "*nvim*") {continue}
   try {
     Import-Module $module.FullName
     Write-Host "Imported" $module.FullName

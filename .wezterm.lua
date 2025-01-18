@@ -103,7 +103,7 @@ end
 -- Set Shell based on "\" or "/" file path separator
 if package.config:sub(1,1) == '\\' then
     config.default_prog = { 'pwsh' }
-    config.font = wezterm.font 'Anonymice Nerd Font Mono'
+    config.font = wezterm.font 'AnonymicePro Nerd Font Mono'
 else
     config.default_prog = { 'fish' }
     config.font = wezterm.font 'AnonymicePro Nerd Font Mono'
