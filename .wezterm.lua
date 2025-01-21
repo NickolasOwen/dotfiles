@@ -6,9 +6,10 @@ local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
 
-config.color_scheme = 'Astrodark (Gogh)'
--- config.color_scheme = 'Belge (terminal.sexy)'
--- config.color_scheme = 'Bitmute (terminal.sexy)'
+-- config.color_scheme = 'Astrodark (Gogh)'
+
+config.color_scheme = 'Blue Matrix'
+
 config.disable_default_key_bindings = true
 
 -- config.leader = { key = 'VoidSymbol', mods = '', timeout_milliseconds = math.maxinteger }
@@ -101,15 +102,17 @@ for i = 1, 8 do
 end
 
 -- Set Shell based on "\" or "/" file path separator
-if package.config:sub(1,1) == '\\' then
+local powershellTest = os.execute("pwsh --version")
+-- if package.config:sub(1,1) == '\\' then
+if powershellTest then
     config.default_prog = { 'pwsh' }
-    config.font = wezterm.font 'Anonymice Nerd Font Mono'
 else
-    config.default_prog = { 'fish' }
-    config.font = wezterm.font 'AnonymicePro Nerd Font Mono'
+    config.default_prog = { 'bash' }
 end
 
+
 config.font_size = 11.0
+config.font = wezterm.font 'AnonymicePro Nerd Font Mono'
 
 config.enable_tab_bar = false
 

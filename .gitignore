@@ -75,5 +75,5 @@ google-chrome/
 .config/fish/completions
 .obsidian
 .vscode
-
+.config/autostart
 

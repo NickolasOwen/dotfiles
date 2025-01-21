@@ -55,8 +55,9 @@ vim.opt.rtp:prepend(lazypath)
 -- Declare plugins for automatic install
 local plugins = {
   -- Color Themes
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-  { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
+  -- { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  -- { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
+  { "folke/tokyonight.nvim", name = "tokyonight", lazy = false, priority = 1000 },
   --
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
   { "williamboman/mason.nvim",
@@ -262,7 +263,8 @@ lspconfig.marksman.setup {}
 
 -- Set colorscheme
 -- vim.cmd.colorscheme "catppuccin"
-vim.cmd.colorscheme "moonfly"
+-- vim.cmd.colorscheme "moonfly"
+vim.cmd.colorscheme "tokyonight"
 
 -- Treesitter
 local configs = require("nvim-treesitter.configs")
