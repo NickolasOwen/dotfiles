@@ -92,6 +92,9 @@ function pcu() {
 function pcd() {
     podman compose down
 }
+function pcb() {
+  podman compose pull
+}
 
 function ll() {
     param(
@@ -136,6 +139,7 @@ function batt() {
 
 $modules = Get-ChildItem -Recurse -File -Filter "*.psm1" -Path "~/projects"
 foreach ($module in $modules) {
+<<<<<<< HEAD
     try {
         Import-Module $module.FullName
         Write-Host "Imported" $module.FullName
@@ -161,4 +165,12 @@ function prompt {
 
     $prompt = "$([char]0x1b)[91m$($elevate)$([char]0x1b)[0m$([char]0x1b)[33m$($env:USER)$([char]0x1b)[0m$("@")$([char]0x1b)[96m$($hostname)$([char]0x1b)[0m $([char]0x1b)[35m$($currentDir)$([char]0x1b)[0m$([char]0x1b)[33m$(":")$([char]0x1b)[0m "
     return $prompt
+=======
+  if ($module.FullName -like "*vscode*" -or $module.FullName -like "*nvim*") {continue}
+  try {
+    Import-Module $module.FullName
+    Write-Host "Imported" $module.FullName
+  }
+  catch {Write-Host "Unable to import" $module.FullName}
+>>>>>>> b97469e2bafb7e741180571b8b3b872ae271b10a
 }
