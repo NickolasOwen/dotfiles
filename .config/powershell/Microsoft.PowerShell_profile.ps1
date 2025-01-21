@@ -1,10 +1,18 @@
+# Set variables to edit configs easily for NVIM and WezTerm on linux and windows
+if ($IsWindows) {
+    $WEZTERM = "C:\Users\bear\projects\bitbucket.org\me\dotfiles\.wezterm.lua"
+    $NVIMCONFIG = "C:\Users\bear\projects\bitbucket.org\me\dotfiles\.config\nvim\init.lua"
+} else {
+    $WEZTERM = "~/.wezterm.lua"
+    $NVIMCONFIG = "~/.config/nvim/init.lua"
+}
+
 ## Remove alias for ls if it exists
 $ls_alias = get-alias ls -ErrorAction SilentlyContinue
-# $ALACRITTY = "C:\Users\a_nowen1\AppData\Roaming\Alacritty\alacritty.toml"
-$WEZTERM = "C:\Users\a_nowen1\.wezterm.lua"
 if ($ls_alias){
     remove-item alias:ls
 }
+
 ## Custom colors for ls to make output pretty
 function ls() {
     param(
@@ -88,11 +96,13 @@ function pcbr() {
 function pcu() {
     podman compose up -d
 }
-
+function pcb() {
+    podman compose build
+}
 function pcd() {
     podman compose down
 }
-function pcb() {
+function pcp() {
   podman compose pull
 }
 
@@ -139,7 +149,7 @@ function batt() {
 
 $modules = Get-ChildItem -Recurse -File -Filter "*.psm1" -Path "~/projects"
 foreach ($module in $modules) {
-<<<<<<< HEAD
+  if ($module.FullName -like "*vscode*" -or $module.FullName -like "*nvim*") {continue}
     try {
         Import-Module $module.FullName
         Write-Host "Imported" $module.FullName
@@ -163,14 +173,12 @@ function prompt {
     $hostname = [System.Net.Dns]::GetHostName()
     $currentDir = $(''+$pwd).replace($HOME, '~')
 
-    $prompt = "$([char]0x1b)[91m$($elevate)$([char]0x1b)[0m$([char]0x1b)[33m$($env:USER)$([char]0x1b)[0m$("@")$([char]0x1b)[96m$($hostname)$([char]0x1b)[0m $([char]0x1b)[35m$($currentDir)$([char]0x1b)[0m$([char]0x1b)[33m$(":")$([char]0x1b)[0m "
+    if ($IsWindows) {
+        $username = $Env:USERNAME
+    } else {
+        $username = $Env:USER
+    }
+    $prompt = "$([char]0x1b)[91m$($elevate)$([char]0x1b)[0m$([char]0x1b)[33m$($username)$([char]0x1b)[0m$("@")$([char]0x1b)[96m$($hostname)$([char]0x1b)[0m $([char]0x1b)[35m$($currentDir)$([char]0x1b)[0m$([char]0x1b)[33m$(":")$([char]0x1b)[0m "
     return $prompt
-=======
-  if ($module.FullName -like "*vscode*" -or $module.FullName -like "*nvim*") {continue}
-  try {
-    Import-Module $module.FullName
-    Write-Host "Imported" $module.FullName
-  }
-  catch {Write-Host "Unable to import" $module.FullName}
->>>>>>> b97469e2bafb7e741180571b8b3b872ae271b10a
 }
+
