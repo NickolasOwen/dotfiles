@@ -106,10 +106,6 @@ local powershellTest = os.execute("pwsh --version")
 -- if package.config:sub(1,1) == '\\' then
 if powershellTest then
     config.default_prog = { 'pwsh' }
-<<<<<<< HEAD
-=======
-    config.font = wezterm.font 'AnonymicePro Nerd Font Mono'
->>>>>>> b97469e2bafb7e741180571b8b3b872ae271b10a
 else
     config.default_prog = { 'bash' }
 end
