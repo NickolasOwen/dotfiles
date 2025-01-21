@@ -123,6 +123,14 @@ config.window_padding = {
     top = 0,
 }
 
+config.window_background_opacity = 0.5
+
+-- config.background = {
+--   {
+--   opacity = "0.5",
+--   },
+-- }
+
 -- and finally, return the configuration to wezterm
 return config
 
