@@ -8,7 +8,12 @@ local config = wezterm.config_builder()
 
 -- config.color_scheme = 'Astrodark (Gogh)'
 
-config.color_scheme = 'Blue Matrix'
+-- config.color_scheme = 'Blue Matrix'
+-- config.color_scheme = 'Bright (base16)'
+-- config.color_scheme = 'Bright Lights'
+-- config.color_scheme = 'Builtin Pastel Dark'
+-- config.color_scheme = 'Cai (Gogh)'
+config.color_scheme = 'Chalk (dark) (terminal.sexy)'
 
 config.disable_default_key_bindings = true
 

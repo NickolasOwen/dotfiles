@@ -57,7 +57,8 @@ local plugins = {
   -- Color Themes
   -- { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   -- { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
-  { "folke/tokyonight.nvim", name = "tokyonight", lazy = false, priority = 1000 },
+  { "scottmckendry/cyberdream.nvim", name = "cyberdream", lazy = false, priority = 1000 },
+  -- { "folke/tokyonight.nvim", name = "tokyonight", lazy = false, priority = 1000 },
   --
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
   { "williamboman/mason.nvim",
@@ -264,7 +265,8 @@ lspconfig.marksman.setup {}
 -- Set colorscheme
 -- vim.cmd.colorscheme "catppuccin"
 -- vim.cmd.colorscheme "moonfly"
-vim.cmd.colorscheme "tokyonight"
+-- vim.cmd.colorscheme "tokyonight"
+vim.cmd.colorscheme "cyberdream"
 
 -- Treesitter
 local configs = require("nvim-treesitter.configs")

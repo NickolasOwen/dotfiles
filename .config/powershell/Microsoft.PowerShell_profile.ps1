@@ -3,8 +3,8 @@ if ($IsWindows) {
     $WEZTERM = "C:\Users\bear\projects\bitbucket.org\me\dotfiles\.wezterm.lua"
     $NVIMCONFIG = "C:\Users\bear\projects\bitbucket.org\me\dotfiles\.config\nvim\init.lua"
 } else {
-    $WEZTERM = "~/.wezterm.lua"
-    $NVIMCONFIG = "~/.config/nvim/init.lua"
+    $WEZTERM = "~/.dotfiles/.wezterm.lua"
+    $NVIMCONFIG = "~/.dotfiles/.config/nvim/init.lua"
 }
 
 ## Remove alias for ls if it exists
@@ -13,16 +13,34 @@ if ($ls_alias){
     remove-item alias:ls
 }
 
+# Create ll shortcut to mimic Bash ls -ltrA
+function ll() {
+    param(
+        [string]$path = $($(Get-Location).path)
+    )
+    get-childitem -force $path
+}
+
+# Change get-childitem directory colors to magenta
+$PSStyle.FileInfo.Directory = "`e[35;1m"
+
 ## Custom colors for ls to make output pretty
 function ls() {
     param(
         [string]$path = $($(Get-Location).path)
     )
     get-childitem -force $path | ForEach-Object {
+        $fileName = $_.name
+        # Set color of directories
         if ($_.mode -like "d*") {
-            write-host -ForegroundColor Magenta $_.name
+            write-host -ForegroundColor Magenta $fileName
+        # Set color of symlinks
+        } elseif ($_.mode -like "l*") {
+            write-host -ForegroundColor DarkBlue $fileName -NoNewline
+            write-host -ForegroundColor Yellow " -> " -NoNewline
+            write-host -ForegroundColor Blue $_.LinkTarget
         } else {
-            write-host $_.name
+            write-host $fileName
         }
     }
 }
@@ -106,16 +124,6 @@ function pcp() {
   podman compose pull
 }
 
-function ll() {
-    param(
-        [string]$path = $($(Get-Location).path)
-    )
-    get-childitem -force $path
-}
-
-# Change get-childitem directory colors to magenta
-$PSStyle.FileInfo.Directory = "`e[35;1m"
-
 Set-Alias -Name edit -Value nvim
 
 function xinstall() {
@@ -170,15 +178,15 @@ function prompt {
             else { '' }
         )
     }
-    $hostname = [System.Net.Dns]::GetHostName()
+    $hostname = $([System.Net.Dns]::GetHostName()).ToLower()
     $currentDir = $(''+$pwd).replace($HOME, '~')
 
     if ($IsWindows) {
-        $username = $Env:USERNAME
+        $username = $($Env:USERNAME).ToLower()
     } else {
-        $username = $Env:USER
+        $username = $($Env:USER).ToLower()
     }
-    $prompt = "$([char]0x1b)[91m$($elevate)$([char]0x1b)[0m$([char]0x1b)[33m$($username)$([char]0x1b)[0m$("@")$([char]0x1b)[96m$($hostname)$([char]0x1b)[0m $([char]0x1b)[35m$($currentDir)$([char]0x1b)[0m$([char]0x1b)[33m$(":")$([char]0x1b)[0m "
+    $prompt = "$([char]0x1b)[91m$($elevate)$([char]0x1b)[0m$([char]0x1b)[1;33m$($username)$([char]0x1b)[0m$("@")$([char]0x1b)[1;96m$($hostname)$([char]0x1b)[0m $([char]0x1b)[35m$($currentDir)$([char]0x1b)[0m$([char]0x1b)[33m$(":")$([char]0x1b)[0m "
     return $prompt
 }
 
