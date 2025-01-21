@@ -76,4 +76,5 @@ google-chrome/
 .obsidian
 .vscode
 .config/autostart
+.config/NuGet
 
