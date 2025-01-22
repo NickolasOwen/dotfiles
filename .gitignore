@@ -1,9 +1,5 @@
 *
 
-
-# !*/
-# .config/chromium/*
-
 !README.md
 !.bashrc
 !.bash_aliases
@@ -34,7 +30,6 @@
 !.config/nvim/templates/yaml
 !.config/nvim/templates/powershell/*
 !.config/nvim/templates/yaml/*
-
 
 !.ssh/
 !.ssh/config
