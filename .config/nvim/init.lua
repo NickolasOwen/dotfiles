@@ -267,6 +267,7 @@ lspconfig.marksman.setup {}
 -- vim.cmd.colorscheme "moonfly"
 -- vim.cmd.colorscheme "tokyonight"
 vim.cmd.colorscheme "cyberdream"
+vim.cmd([[hi Normal guibg=NONE ctermbg=NONE]])
 
 -- Treesitter
 local configs = require("nvim-treesitter.configs")
