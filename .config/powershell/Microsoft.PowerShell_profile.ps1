@@ -130,7 +130,11 @@ function xinstall() {
     param(
         [string]$app
     )
-    sudo xbps-install -Su $app
+    if ($app) {
+        sudo xbps-install -Su $app
+    } else {
+        sudo xbps-install -Su
+    }
 }
 
 function xquery() {
