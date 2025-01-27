@@ -38,6 +38,11 @@ export PATH="~/.local/flutter/bin:$PATH"
 # export XDG_CACHE_HOME=/home/bear/.cache
 # export XDG_RUNTIME_DIR=/home/bear/.run/1000
 
+# MacOS Exports for Brew
+export HOMEBREW_PREFIX=/usr/local
+export HOMEBREW_CELLAR=/usr/local/Cellar
+export HOMEBREW_REPOSITORY=/usr/local/Homebrew
+
 export PODMAN_COMPOSE_WARNING_LOGS=false
 export NVM_DIR="$HOME/.nvm"
 

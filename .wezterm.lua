@@ -5,14 +5,8 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
-
+--
 -- config.color_scheme = 'Astrodark (Gogh)'
-
--- config.color_scheme = 'Blue Matrix'
--- config.color_scheme = 'Bright (base16)'
--- config.color_scheme = 'Bright Lights'
--- config.color_scheme = 'Builtin Pastel Dark'
--- config.color_scheme = 'Cai (Gogh)'
 config.color_scheme = 'Chalk (dark) (terminal.sexy)'
 
 config.disable_default_key_bindings = true
@@ -95,6 +89,10 @@ config.keys = {
     mods = 'CTRL|SHIFT',
     action = wezterm.action.PasteFrom 'Clipboard',
   },
+  { key = 'L',
+    mods = 'CTRL',
+    action = wezterm.action.ShowDebugOverlay
+  },
 }
 
 -- Create keybinds to move to tabs using ALT + 1-9
@@ -106,17 +104,38 @@ for i = 1, 8 do
   })
 end
 
--- Set Shell based on "\" or "/" file path separator
-local powershellTest = os.execute("pwsh --version")
--- if package.config:sub(1,1) == '\\' then
-if powershellTest then
-    config.default_prog = { 'pwsh' }
-else
-    config.default_prog = { 'bash' }
+config.default_prog = { '/usr/local/bin/pwsh' }
+
+-- Writes to the log use Ctrl+Shift+L to access debug menu
+-- wezterm.log_info(font_handle)
+
+-- local font_size = os.execute("")
+-- config.font_size = tonumber(font_handle)
+
+function getOS()
+	-- ask LuaJIT first
+	-- if jit then
+	-- 	return jit.os
+	-- end
+	--
+	-- Unix, Linux variants
+	local fh,err = assert(io.popen("uname -o 2>/dev/null","r"))
+	if fh then
+		osname = fh:read()
+	end
+	--
+	return osname or "Windows"
 end
 
+wezterm.log_info(getOS())
 
-config.font_size = 11.0
+if (osname == "Darwin")
+then
+  config.font_size = 14.0
+else
+  config.font_size = 11.0
+end
+
 config.font = wezterm.font 'AnonymicePro Nerd Font Mono'
 
 config.enable_tab_bar = false
@@ -128,13 +147,16 @@ config.window_padding = {
     top = 0,
 }
 
-config.window_background_opacity = 0.95
+config.window_background_opacity = 0.90
 
 -- config.background = {
 --   {
 --   opacity = "0.5",
 --   },
 -- }
+
+config.initial_cols = 500
+config.initial_rows = 500
 
 -- and finally, return the configuration to wezterm
 return config

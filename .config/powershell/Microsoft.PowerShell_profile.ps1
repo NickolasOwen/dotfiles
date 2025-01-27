@@ -2,7 +2,11 @@
 if ($IsWindows) {
     $WEZTERM = "C:\Users\bear\projects\bitbucket.org\me\dotfiles\.wezterm.lua"
     $NVIMCONFIG = "C:\Users\bear\projects\bitbucket.org\me\dotfiles\.config\nvim\init.lua"
-} else {
+} elseif ($IsLinux) {
+    $WEZTERM = "~/.dotfiles/.wezterm.lua"
+    $NVIMCONFIG = "~/.dotfiles/.config/nvim/init.lua"
+} elseif ($IsMacOS) {
+    $Env:PATH += ":/usr/local/bin/:~/.cargo/bin/"
     $WEZTERM = "~/.dotfiles/.wezterm.lua"
     $NVIMCONFIG = "~/.dotfiles/.config/nvim/init.lua"
 }
@@ -38,7 +42,7 @@ function ls() {
         } elseif ($_.mode -like "l*") {
             write-host -ForegroundColor DarkBlue $fileName -NoNewline
             write-host -ForegroundColor Yellow " -> " -NoNewline
-            write-host -ForegroundColor Blue $_.LinkTarget
+            write-host -ForegroundColor DarkRed $_.LinkTarget
         } else {
             write-host $fileName
         }
