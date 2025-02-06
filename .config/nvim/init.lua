@@ -65,6 +65,15 @@ local plugins = {
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig"
   },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
   -- Window Manager Config
   {"baskerville/vim-sxhkdrc"},
   --
@@ -214,6 +223,7 @@ require("mason-lspconfig").setup{
 }
 require("fidget").setup()
 require('nvim_comment').setup()
+-- require('todo_comment').setup()
 
 -- LSP
 local lspconfig = require('lspconfig')

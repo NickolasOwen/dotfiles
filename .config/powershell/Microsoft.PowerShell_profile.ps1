@@ -173,8 +173,27 @@ foreach ($module in $modules) {
     catch {Write-Host "Unable to import" $module.FullName}
 }
 
+# Attemp at prompt
+# function prompt {
+#   $p = $executionContext.SessionState.Path.CurrentLocation
+#   $osc7 = ""
+#   if ($p.Provider.Name -eq "FileSystem") {
+#     $ansi_escape = [char]27
+#     $provider_path = $p.ProviderPath -Replace "\\", "/"
+#     $osc7 = "$ansi_escape]7;file://${env:COMPUTERNAME}/${provider_path}${ansi_escape}\"
+#   }
+#   "${osc7}PS $p$('>' * ($nestedPromptLevel + 1)) ";
+# }
+
 # Nick's Custom Prompt
 function prompt {
+  $p = $executionContext.SessionState.Path.CurrentLocation
+  $osc7 = ""
+  if ($p.Provider.Name -eq "FileSystem") {
+    $ansi_escape = [char]27
+    $provider_path = $p.ProviderPath -Replace "\\", "/"
+    $osc7 = "$ansi_escape]7;file://${env:COMPUTERNAME}/${provider_path}${ansi_escape}\"
+  }
     if ($IsWindows) {
         $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
         $principal = [Security.Principal.WindowsPrincipal] $identity
@@ -186,7 +205,12 @@ function prompt {
             else { '' }
         )
     }
+
     $hostname = $([System.Net.Dns]::GetHostName()).ToLower()
+    if ($hostname -like "*mac*") {
+        $hostname = "mac"
+    }
+
     $currentDir = $(''+$pwd).replace($HOME, '~')
 
     if ($IsWindows) {
@@ -194,7 +218,7 @@ function prompt {
     } else {
         $username = $($Env:USER).ToLower()
     }
-    $prompt = "$([char]0x1b)[91m$($elevate)$([char]0x1b)[0m$([char]0x1b)[1;33m$($username)$([char]0x1b)[0m$("@")$([char]0x1b)[1;96m$($hostname)$([char]0x1b)[0m $([char]0x1b)[35m$($currentDir)$([char]0x1b)[0m$([char]0x1b)[33m$(":")$([char]0x1b)[0m "
+    $prompt = "${osc7}$([char]0x1b)[91m$($elevate)$([char]0x1b)[0m$([char]0x1b)[1;33m$($username)$([char]0x1b)[0m$("@")$([char]0x1b)[1;96m$($hostname)$([char]0x1b)[0m $([char]0x1b)[35m$($currentDir)$([char]0x1b)[0m$([char]0x1b)[33m$(":")$([char]0x1b)[0m "
     return $prompt
 }
 
