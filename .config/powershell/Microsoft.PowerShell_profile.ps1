@@ -11,6 +11,13 @@ if ($IsWindows) {
     $NVIMCONFIG = "~/.dotfiles/.config/nvim/init.lua"
 }
 
+function dxs() {
+    if ($IsMacOS) {
+        zsh -c "dx serve"
+    } else {
+        dx serve
+    }
+}
 ## Remove alias for ls if it exists
 $ls_alias = get-alias ls -ErrorAction SilentlyContinue
 if ($ls_alias){
