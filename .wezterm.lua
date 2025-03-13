@@ -104,7 +104,8 @@ for i = 1, 8 do
   })
 end
 
-config.default_prog = { '/usr/local/bin/pwsh' }
+-- config.default_prog = { '/usr/local/bin/pwsh' }
+config.default_prog = { 'pwsh' }
 
 -- Writes to the log use Ctrl+Shift+L to access debug menu
 -- wezterm.log_info(font_handle)

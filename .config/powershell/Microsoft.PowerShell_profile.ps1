@@ -5,6 +5,8 @@ if ($IsWindows) {
 } elseif ($IsLinux) {
     $WEZTERM = "~/.dotfiles/.wezterm.lua"
     $NVIMCONFIG = "~/.dotfiles/.config/nvim/init.lua"
+    $Env:PATH += ":/usr/local/bin/:~/.cargo/bin/:~/.local/bin"
+    $WALLPAPERS = "/usr/share/wallpapers/"
 } elseif ($IsMacOS) {
     $Env:PATH += ":/usr/local/bin/:~/.cargo/bin/"
     $WEZTERM = "~/.dotfiles/.wezterm.lua"
@@ -54,6 +56,10 @@ function ls() {
             write-host $fileName
         }
     }
+}
+
+function lswal() {
+    ls $WALLPAPERS
 }
 
 function touch() {
@@ -136,6 +142,13 @@ function pcp() {
 }
 
 Set-Alias -Name edit -Value nvim
+
+function sedit() {
+    param(
+        [string]$file
+    )
+    sudo nvim $file
+}
 
 function xinstall() {
     param(

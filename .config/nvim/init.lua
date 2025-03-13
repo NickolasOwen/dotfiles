@@ -54,6 +54,16 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Declare plugins for automatic install
 local plugins = {
+  {
+    'derektata/lorem.nvim',
+    config = function()
+        require('lorem').opts {
+            sentenceLength = "medium",
+            comma_chance = 0.2,
+            max_commas_per_sentence = 2,
+        }
+    end
+  },
   -- Color Themes
   -- { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   -- { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
@@ -219,7 +229,7 @@ require("lazy").setup(plugins, opts)
 require("mason").setup()
 require("mason-lspconfig").setup{
   -- ensure_installed = { "lua_ls", "powershell_es", "yamlls", "marksman", "ts_ls", "volar"}
-  ensure_installed = { "lua_ls", "rust_analyzer", "bashls", "yamlls", "marksman", "powershell_es"}
+  ensure_installed = { "lua_ls", "rust_analyzer", "bashls", "yamlls", "marksman", "powershell_es", "cssls"}
 }
 require("fidget").setup()
 require('nvim_comment').setup()
