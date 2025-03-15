@@ -16,6 +16,7 @@
 !.config/sxhkd/sxhkdrc
 !.config/powershell
 !.config/powershell/Microsoft.PowerShell_profile.ps1
+!win_setup.ps1
 !.config/picom.conf
 !.config/z.sh
 !.config/hypr
