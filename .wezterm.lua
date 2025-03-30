@@ -156,9 +156,15 @@ config.window_background_opacity = 0.90
 --   },
 -- }
 
-config.initial_cols = 500
-config.initial_rows = 500
+-- config.initial_cols = 500
+-- config.initial_rows = 500
+
+local mux = wezterm.mux
+
+wezterm.on("gui-startup", function()
+  local tab, pane, window = mux.spawn_window{}
+  window:gui_window():maximize()
+end)
 
 -- and finally, return the configuration to wezterm
 return config
-
