@@ -1,7 +1,7 @@
 # Set variables to edit configs easily for NVIM and WezTerm on linux and windows
 if ($IsWindows) {
     $WEZTERM = "C:\Users\bear\.wezterm.lua"
-    $NVIMCONFIG = "C:\Users\bear\projects\bitbucket.org\me\dotfiles\.config\nvim\init.lua"
+    $NVIMCONFIG = "C:\Users\bear\projects\github.com\me\dotfiles\.config\nvim\init.lua"
 } elseif ($IsLinux) {
     $WEZTERM = "~/.dotfiles/.wezterm.lua"
     $NVIMCONFIG = "~/.dotfiles/.config/nvim/init.lua"
