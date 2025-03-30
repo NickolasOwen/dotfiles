@@ -151,14 +151,14 @@ function sedit() {
 }
 
 function xinstall() {
-    param(
-        [string]$app
-    )
-    if ($app) {
-        sudo xbps-install -Su $app
-    } else {
-        sudo xbps-install -Su
-    }
+    # param(
+    #     [string]$app
+    # )
+    # if ($app) {
+        sudo xbps-install -Su $args
+    # } else {
+    #     sudo xbps-install -Su
+    # }
 }
 
 function xquery() {

@@ -1,8 +1,8 @@
 -- Basic Vim Settings
 vim.opt.expandtab = true
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.relativenumber = true
 vim.opt.linebreak = true
 vim.opt.colorcolumn = "80,120"
@@ -76,6 +76,10 @@ local plugins = {
     "neovim/nvim-lspconfig"
   },
   {
+    "stevearc/conform.nvim",
+    opts = {},
+  },
+  {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
@@ -103,6 +107,7 @@ local plugins = {
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
     end,
+    defaults = { file_ignore_patterns = {"node_modules", "target", "dist"} },
   },
   { "j-hui/fidget.nvim" },
   { "tpope/vim-sleuth" },
@@ -292,7 +297,7 @@ vim.cmd([[hi Normal guibg=NONE ctermbg=NONE]])
 -- Treesitter
 local configs = require("nvim-treesitter.configs")
 configs.setup({
-  ensure_installed = { "lua", "vim", "vimdoc", "javascript", "html", "css", "yaml", "markdown" },
+  ensure_installed = { "lua", "vim", "vimdoc", "javascript", "html", "css", "yaml", "markdown", "rust" },
   sync_install = false,
   highlight = { enable = true },
   indent = { enable = true },
@@ -323,3 +328,8 @@ vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", 
 vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
 
+-- Prettier
+-- nnoremap gp :silent %!prettier --stdin-filepath %<CR>
+vim.api.nvim_set_keymap("n", "<leader>pf", "<cmd>%!prettier --stdin-filepath %<CR>", { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap("n", "<leader>w", ":w<CR>", { noremap = true, silent = true })
