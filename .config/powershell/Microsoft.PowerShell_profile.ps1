@@ -5,9 +5,10 @@ if ($IsWindows) {
     $NVIMCONFIG = "C:\Users\$Env:USERNAME\projects\github.com\me\dotfiles\.config\nvim\init.lua"
     $WALLPAPERS = "C:\Users\$Env:USERNAME\Pictures\Wallpapers\"
 
-    $yawa_process = Get-Process -Name yawa
+    $yawa_process = Get-Process -Name yawa -ErrorAction SilentlyContinue
     if(-not $yawa_process) {
         Start-Process "yawa.exe $WALLPAPERS"
+        Clear-Host
     }
 
 } elseif ($IsLinux) {
@@ -16,9 +17,10 @@ if ($IsWindows) {
     $Env:PATH += ":/usr/local/bin/:~/.cargo/bin/:~/.local/bin"
     $WALLPAPERS = "/usr/share/wallpapers/"
 
-    $yawa_process = Get-Process -Name yawa
+    $yawa_process = Get-Process -Name yawa -ErrorAction SilentlyContinue
     if(-not $yawa_process) {
         Start-Process nohup "yawa $WALLPAPERS"
+        Clear-Host
     }
 
 } elseif ($IsMacOS) {
