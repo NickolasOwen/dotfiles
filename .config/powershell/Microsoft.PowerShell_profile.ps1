@@ -1,12 +1,26 @@
 # Set variables to edit configs easily for NVIM and WezTerm on linux and windows
 if ($IsWindows) {
-    $WEZTERM = "C:\Users\bear\.wezterm.lua"
-    $NVIMCONFIG = "C:\Users\bear\projects\github.com\me\dotfiles\.config\nvim\init.lua"
+    $Env:PATH += ";C:\Users\$Env:USERNAME\.local\bin"
+    $WEZTERM = "C:\Users\$Env:USERNAME\.wezterm.lua"
+    $NVIMCONFIG = "C:\Users\$Env:USERNAME\projects\github.com\me\dotfiles\.config\nvim\init.lua"
+    $WALLPAPERS = "C:\Users\$Env:USERNAME\Pictures\Wallpapers\"
+
+    $yawa_process = Get-Process -Name yawa
+    if(-not $yawa_process) {
+        Start-Process "yawa.exe $WALLPAPERS"
+    }
+
 } elseif ($IsLinux) {
     $WEZTERM = "~/.dotfiles/.wezterm.lua"
     $NVIMCONFIG = "~/.dotfiles/.config/nvim/init.lua"
     $Env:PATH += ":/usr/local/bin/:~/.cargo/bin/:~/.local/bin"
     $WALLPAPERS = "/usr/share/wallpapers/"
+
+    $yawa_process = Get-Process -Name yawa
+    if(-not $yawa_process) {
+        Start-Process nohup "yawa $WALLPAPERS"
+    }
+
 } elseif ($IsMacOS) {
     $Env:PATH += ":/usr/local/bin/:~/.cargo/bin/"
     $WEZTERM = "~/.dotfiles/.wezterm.lua"
