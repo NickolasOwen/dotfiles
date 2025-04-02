@@ -36,12 +36,19 @@ if (-not $(Get-Command "nvim" -ErrorAction SilentlyContinue)){
     winget install Neovim.Neovim
 }
 
+# Install Yazi and Optional Dependencies
+if (-not $(Get-Command "yazi" -ErrorAction SilentlyContinue)){
+    winget install sxyazi.yazi
+    # Install the optional dependencies (recommended):
+    winget install Gyan.FFmpeg 7zip.7zip jqlang.jq sharkdp.fd BurntSushi.ripgrep.MSVC junegunn.fzf ajeetdsouza.zoxide ImageMagick.ImageMagick
+}
+
 # Symlink Neovim Config
-Invoke-Command {cmd.exe -C "mklink C:\Users\thema\AppData\Local\nvim C:\Users\thema\projects\github.com\me\dotfiles\.config\nvim"}
+New-Item -ItemType SymbolicLink -Path "C:\Users\thema\AppData\Local\nvim" -Target "C:\Users\thema\projects\github.com\me\dotfiles\.config\nvim"
 
 # Symlink Powershell Config
-Invoke-Command {cmd.exe -C "mklink C:\Users\thema\Documents\PowerShell\Microsoft.PowerShell_profile.ps1 C:\Users\thema\projects\github.com\me\dotfiles\Microsoft.PowerShell_profile.ps1"}
+New-Item -ItemType SymbolicLink -Path "C:\Users\thema\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" -Target "C:\Users\thema\projects\github.com\me\dotfiles\Microsoft.PowerShell_profile.ps1"
 
 # Symlink WezTerm Config
-Invoke-Command {cmd.exe -C "mklink C:\Users\thema\.wezterm.lua C:\Users\thema\projects\github.com\me\dotfiles\.wezterm.lua"}
+New-Item -ItemType SymbolicLink -Path "C:\Users\thema\.wezterm.lua" -Target "C:\Users\thema\projects\github.com\me\dotfiles\.wezterm.lua"
 
