@@ -7,7 +7,7 @@ if ($IsWindows) {
 
     $yawa_process = Get-Process -Name yawa -ErrorAction SilentlyContinue
     if(-not $yawa_process) {
-        Start-Process "yawa.exe $WALLPAPERS"
+        Start-Process "yawa.exe -p $WALLPAPERS"
         Clear-Host
     }
 
@@ -15,11 +15,11 @@ if ($IsWindows) {
     $WEZTERM = "~/.dotfiles/.wezterm.lua"
     $NVIMCONFIG = "~/.dotfiles/.config/nvim/init.lua"
     $Env:PATH += ":/usr/local/bin/:~/.cargo/bin/:~/.local/bin"
-    $WALLPAPERS = "/usr/share/wallpapers/sfw"
+    $WALLPAPERS = "/usr/share/wallpapers/nsfw"
 
     $yawa_process = Get-Process -Name yawa -ErrorAction SilentlyContinue
     if(-not $yawa_process) {
-        Start-Process nohup "yawa $WALLPAPERS"
+        Start-Process nohup "yawa -p $WALLPAPERS"
         Clear-Host
     }
 
