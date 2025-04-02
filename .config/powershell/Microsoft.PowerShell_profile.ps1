@@ -15,7 +15,7 @@ if ($IsWindows) {
     $WEZTERM = "~/.dotfiles/.wezterm.lua"
     $NVIMCONFIG = "~/.dotfiles/.config/nvim/init.lua"
     $Env:PATH += ":/usr/local/bin/:~/.cargo/bin/:~/.local/bin"
-    $WALLPAPERS = "/usr/share/wallpapers/"
+    $WALLPAPERS = "/usr/share/wallpapers/sfw"
 
     $yawa_process = Get-Process -Name yawa -ErrorAction SilentlyContinue
     if(-not $yawa_process) {
