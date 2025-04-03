@@ -7,8 +7,9 @@ if ($IsWindows) {
 
     $yawa_process = Get-Process -Name yawa -ErrorAction SilentlyContinue
     if(-not $yawa_process) {
-        Start-Process "yawa.exe -p $WALLPAPERS"
+        Start-Process -FilePath yawa.exe -ArgumentList "--path $WALLPAPERS" -WindowStyle Hidden
         Clear-Host
+        Write-Host "I set the background"
     }
 
 } elseif ($IsLinux) {
