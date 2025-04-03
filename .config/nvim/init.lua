@@ -65,10 +65,12 @@ local plugins = {
     end
   },
   -- Color Themes
-  -- { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-  -- { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
   { "scottmckendry/cyberdream.nvim", name = "cyberdream", lazy = false, priority = 1000 },
-  -- { "folke/tokyonight.nvim", name = "tokyonight", lazy = false, priority = 1000 },
+  { "folke/tokyonight.nvim", name = "tokyonight", lazy = false, priority = 1000 },
+  { "sainnhe/sonokai", name = "sonokai", lazy = false, priority = 1000 },
+  { "HoNamDuong/hybrid.nvim", name = "hybrid", lazy = false, priority = 1000 },
   --
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
   { "williamboman/mason.nvim",
@@ -291,7 +293,10 @@ lspconfig.marksman.setup {}
 -- vim.cmd.colorscheme "catppuccin"
 -- vim.cmd.colorscheme "moonfly"
 -- vim.cmd.colorscheme "tokyonight"
-vim.cmd.colorscheme "cyberdream"
+-- vim.cmd.colorscheme "cyberdream"
+vim.cmd.colorscheme "sonokai"
+-- vim.cmd.colorscheme "hybrid"
+
 vim.cmd([[hi Normal guibg=NONE ctermbg=NONE]])
 
 -- Treesitter
