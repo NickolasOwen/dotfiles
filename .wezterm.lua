@@ -5,9 +5,11 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
---
--- config.color_scheme = 'Astrodark (Gogh)'
-config.color_scheme = 'Chalk (dark) (terminal.sexy)'
+
+config.font = wezterm.font 'AnonymicePro Nerd Font Mono'
+config.color_scheme = 'Astrodark (Gogh)'
+-- config.color_scheme = 'Chalk (dark) (terminal.sexy)'
+-- config.color_scheme = 'zenbones_dark'
 
 config.disable_default_key_bindings = true
 
@@ -120,10 +122,7 @@ config.default_prog = { 'pwsh' }
 -- Writes to the log use Ctrl+Shift+L to access debug menu
 -- wezterm.log_info(font_handle)
 
--- local font_size = os.execute("")
--- config.font_size = tonumber(font_handle)
-
-function getOS()
+local function getOS()
 	-- ask LuaJIT first
 	-- if jit then
 	-- 	return jit.os
@@ -132,22 +131,20 @@ function getOS()
 	-- Unix, Linux variants
 	local fh,err = assert(io.popen("uname -o 2>/dev/null","r"))
 	if fh then
-		osname = fh:read()
+	  OSname = fh:read()
 	end
 	--
-	return osname or "Windows"
+	return OSname or "Windows"
 end
 
 wezterm.log_info(getOS())
 
-if (osname == "Darwin")
+if (OSname == "Darwin")
 then
   config.font_size = 14.0
 else
   config.font_size = 11.0
 end
-
-config.font = wezterm.font 'AnonymicePro Nerd Font Mono'
 
 config.enable_tab_bar = false
 
