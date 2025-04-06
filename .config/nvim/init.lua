@@ -329,7 +329,18 @@ vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<C
 vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
 
 -- Prettier
--- nnoremap gp :silent %!prettier --stdin-filepath %<CR>
 vim.api.nvim_set_keymap("n", "<leader>pf", "<cmd>%!prettier --stdin-filepath %<CR>", { noremap = true, silent = true })
 
+-- My Favs
 vim.api.nvim_set_keymap("n", "<leader>w", ":w<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>\\", ":vert sb<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>-", ":bot sb<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>h", "<C-w>h", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>j", "<C-w>j", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>k", "<C-w>k", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>l", "<C-w>l", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>s", "<C-w>-", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>t", "<C-w>+", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>n", "<C-w><", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>w", "<C-w>>", { noremap = true, silent = true })
+

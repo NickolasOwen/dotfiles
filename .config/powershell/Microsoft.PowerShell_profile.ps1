@@ -15,11 +15,11 @@ if ($IsWindows) {
     $WEZTERM = "~/.dotfiles/.wezterm.lua"
     $NVIMCONFIG = "~/.dotfiles/.config/nvim/init.lua"
     $Env:PATH += ":/usr/local/bin/:~/.cargo/bin/:~/.local/bin"
-    $WALLPAPERS = "/usr/share/wallpapers/nsfw"
+    $WALLPAPERS = "/usr/share/wallpapers/"
 
     $yawa_process = Get-Process -Name yawa -ErrorAction SilentlyContinue
     if(-not $yawa_process) {
-        Start-Process nohup "yawa -p $WALLPAPERS"
+        Start-Process -FilePath nohup -ArgumentList "yawa --path $WALLPAPERS --time 10" -RedirectStandardOutput /tmp/yawa.log -RedirectStandardError /tmp/yawa.error
         Clear-Host
     }
 
@@ -188,6 +188,10 @@ function batt() {
     upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep percentage: | awk "{ print $2 }"
 }
 
+# function yazi() {
+#     yazi $PWD
+# }
+
 # Invoke-Expression (&starship init powershell)
 
 # $Env:PATH += ";C:\flutter\bin;C:\users\thema\.bin"
@@ -221,7 +225,11 @@ foreach ($module in $modules) {
 #   "${osc7}PS $p$('>' * ($nestedPromptLevel + 1)) ";
 # }
 
+# Set Vi mode
+Set-PSReadlineOption -EditMode vi
+
 # Nick's Custom Prompt
+
 function prompt {
   $p = $executionContext.SessionState.Path.CurrentLocation
   $osc7 = ""

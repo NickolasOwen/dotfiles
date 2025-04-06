@@ -93,6 +93,16 @@ config.keys = {
     mods = 'CTRL',
     action = wezterm.action.ShowDebugOverlay
   },
+  {
+    key="r",
+    mods="CTRL",
+    action=wezterm.action.RotatePanes 'CounterClockwise',
+  },
+  {
+    key="r",
+    mods="CTRL|SHIFT",
+    action=wezterm.action.RotatePanes 'Clockwise',
+  },
 }
 
 -- Create keybinds to move to tabs using ALT + 1-9
