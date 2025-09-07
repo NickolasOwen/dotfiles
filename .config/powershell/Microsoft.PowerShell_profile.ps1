@@ -16,6 +16,7 @@ if ($IsWindows) {
     $NVIMCONFIG = "~/.dotfiles/.config/nvim/init.lua"
     $Env:PATH += ":/usr/local/bin/:~/.cargo/bin/:~/.local/bin"
     $WALLPAPERS = "/usr/share/wallpapers/"
+    $Env:XDG_DATA_DIRS="/usr/share:/usr/local/share:~/.local/share"
 
     $yawa_process = Get-Process -Name yawa -ErrorAction SilentlyContinue
     if(-not $yawa_process) {
@@ -124,7 +125,14 @@ function gpu() {
 }
 
 function gd() {
-    git diff
+    param(
+        [string]$file
+    )
+    if ($file) {
+        git diff $file
+    } else {
+        git diff
+    }
 }
 
 function pcs() {
@@ -189,7 +197,14 @@ function batt() {
 }
 
 # function yazi() {
-#     yazi $PWD
+#     param(
+#         [string]$dir
+#     )
+#     if ($dir) {
+#         yazi $dir
+#     } else {
+#         yazi $pwd
+#     }
 # }
 
 # Invoke-Expression (&starship init powershell)

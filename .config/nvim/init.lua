@@ -1,8 +1,11 @@
 -- Basic Vim Settings
 vim.opt.expandtab = true
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+
 vim.opt.relativenumber = true
 vim.opt.linebreak = true
 vim.opt.colorcolumn = "80,120"
@@ -72,10 +75,20 @@ local plugins = {
   { "sainnhe/sonokai", name = "sonokai", lazy = false, priority = 1000 },
   { "HoNamDuong/hybrid.nvim", name = "hybrid", lazy = false, priority = 1000 },
   --
+  --
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
   { "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-    "neovim/nvim-lspconfig"
+  },
+  {
+    "neovim/nvim-lspconfig",
+    init_options = {
+      userLanguages = {
+        eelixir = "html-eex",
+        eruby = "erb",
+        rust = "html",
+      },
+    },
   },
   {
     "stevearc/conform.nvim",
@@ -89,6 +102,10 @@ local plugins = {
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
     }
+  },
+  -- Astro
+  {
+    "wuelnerdotexe/vim-astro"
   },
   -- Window Manager Config
   {"baskerville/vim-sxhkdrc"},
@@ -235,8 +252,8 @@ require("lazy").setup(plugins, opts)
 -- require("catppuccin").setup()
 require("mason").setup()
 require("mason-lspconfig").setup{
-  -- ensure_installed = { "lua_ls", "powershell_es", "yamlls", "marksman", "ts_ls", "volar"}
-  ensure_installed = { "lua_ls", "rust_analyzer", "bashls", "yamlls", "marksman", "powershell_es", "cssls"}
+  ensure_installed = { "html", "lua_ls", "rust_analyzer", "bashls", "yamlls", "marksman", "powershell_es", "cssls", "astro"},
+  automatic_installation = true,
 }
 require("fidget").setup()
 require('nvim_comment').setup()
@@ -273,6 +290,8 @@ lspconfig.rust_analyzer.setup({
 lspconfig.powershell_es.setup {}
 lspconfig.yamlls.setup {}
 lspconfig.marksman.setup {}
+lspconfig.html.setup {}
+lspconfig.cssls.setup {}
 -- lspconfig.volar.setup {}
 -- lspconfig.ts_ls.setup {}
 
@@ -302,7 +321,7 @@ vim.cmd([[hi Normal guibg=NONE ctermbg=NONE]])
 -- Treesitter
 local configs = require("nvim-treesitter.configs")
 configs.setup({
-  ensure_installed = { "lua", "vim", "vimdoc", "javascript", "html", "css", "yaml", "markdown", "rust" },
+  ensure_installed = { "lua", "vim", "vimdoc", "javascript", "html", "css", "yaml", "markdown", "rust", "astro" },
   sync_install = false,
   highlight = { enable = true },
   indent = { enable = true },

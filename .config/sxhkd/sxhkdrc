@@ -11,7 +11,7 @@ super + Return
 
 # program launcher
 super + @space 
-	rlaunch
+	rlaunch -p
 
 # make sxhkd reload its configuration files:
 super + Escape

@@ -32,6 +32,8 @@ export XKB_DEFAULT_VARIANT=dvorak
 export PATH="/home/$USER/go/bin:/home/$USER/.local/bin:$NPM_CONFIG_PREFIX/bin:~/.local/bin:/home/linuxbrew/.linuxbrew/bin:$PATH"
 export PATH="~/.local/flutter/bin:$PATH"
 
+# export XDG_DATA_DIRS="$XDG_DATA_DIRS:/usr/share:/usr/local/share:~/.local/share"
+
 # export XDG_BACKEND=wayland
 # export XDG_SESSION_TYPE=wayland
 # export XDG_CURRENT_DESKTOP=Hyprland
